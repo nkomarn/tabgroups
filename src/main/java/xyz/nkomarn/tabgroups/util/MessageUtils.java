@@ -1,18 +1,11 @@
-package com.firestartermc.kerosene.util;
+package xyz.nkomarn.tabgroups.util;
 
-import com.firestartermc.kerosene.Kerosene;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -33,10 +26,6 @@ public final class MessageUtils {
     private static final Pattern RGB_PATTERN = Pattern.compile("&#([A-Fa-f0-9]){6}");
 
     private MessageUtils() {
-    }
-
-    public static void sendComponent(@NotNull Player player, @NotNull Component component) {
-        Kerosene.getKerosene().getAudience(player).sendMessage(component);
     }
 
     /**
@@ -104,43 +93,5 @@ public final class MessageUtils {
                 .map(MatchResult::group)
                 .map(String::trim)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Serializes a given {@link ItemStack} into JSON data, which can be used in chat
-     * {@link TextComponent}s to send a hoverable item message to a player. This method
-     * outputs identical data to what is sent when an item is displayed in a vanilla
-     * death message as a tooltip.
-     *
-     * This is especially useful when trying to share a given {@link ItemStack}'s attributes
-     * in a chat message.
-     *
-     * @param itemStack the item to serialize into JSON
-     * @return the item serialized into JSON data
-     * @see <a href="https://www.spigotmc.org/threads/tut-item-tooltips-with-the-chatcomponent-api.65964/">source</a>
-     * @since 4.0
-     */
-    @NotNull
-    public static String getJsonFromItemStack(ItemStack itemStack) {
-        var craftItemStackClazz = ReflectionUtils.getOBCClass("inventory.CraftItemStack");
-        var asNMSCopyMethod = ReflectionUtils.getMethod(craftItemStackClazz, "asNMSCopy", ItemStack.class);
-        var nmsItemStackClazz = ReflectionUtils.getNMSClass("ItemStack");
-        var nbtTagCompoundClazz = ReflectionUtils.getNMSClass("NBTTagCompound");
-        var saveNmsItemStackMethod = ReflectionUtils.getMethod(nmsItemStackClazz, "save", nbtTagCompoundClazz);
-
-        Object nmsNbtTagCompoundObj; // This will just be an empty NBTTagCompound instance to invoke the saveNms method
-        Object nmsItemStackObj; // This is the net.minecraft.server.ItemStack object received from the asNMSCopy method
-        Object itemAsJsonObject; // This is the net.minecraft.server.ItemStack after being put through saveNmsItem method
-
-        try {
-            nmsNbtTagCompoundObj = nbtTagCompoundClazz.newInstance();
-            nmsItemStackObj = asNMSCopyMethod.invoke(null, itemStack);
-            itemAsJsonObject = saveNmsItemStackMethod.invoke(nmsItemStackObj, nmsNbtTagCompoundObj);
-        } catch (Throwable t) {
-            Bukkit.getLogger().log(Level.WARNING, "failed to serialize itemstack to nms item", t);
-            return "null";
-        }
-
-        return itemAsJsonObject.toString();
     }
 }

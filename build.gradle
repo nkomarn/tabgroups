@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'xyz.nkomarn'
+version '1.0-SNAPSHOT'
+
+targetCompatibility = '11'
+sourceCompatibility = '11'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly ('com.github.LeonMangler:SuperVanish:6.2.1') {
+        exclude group: 'com.comphenix.protocol'
+        exclude group: 'net.citizensnpcs'
+        exclude group: 'be.maximvdw'
+        exclude group: 'me.clip'
+    }
+    implementation 'net.kyori:adventure-text-serializer-bungeecord:4.0.0-SNAPSHOT'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}

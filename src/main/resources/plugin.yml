@@ -1,0 +1,11 @@
+name: tabgroups
+description: a simple tablist styling plugin for spigot
+main: xyz.nkomarn.tabgroups.TabGroups
+author: Mykyta (@nkomarn)
+website: https://nkomarn.xyz
+version: 1.0-SNAPSHOT
+api-version: 1.13
+
+commands:
+  tabgroups:
+    description: "Base management command."

@@ -1,0 +1,37 @@
+groups:
+  admin:
+    name: "Admin" # Display name for the group
+    badge: "[Admin] " # The prefix in tab for this group
+    color:
+      badge: "#ff3333" # The color of the prefix
+      tab: "#ff3333" # The color of the name in tab
+  mod:
+    name: "Mod"
+    badge: "[Mod] "
+    color:
+      badge: "#82c5ff"
+      tab: "#82c5ff"
+  pyre:
+    name: "Pyre"
+    color:
+      tab: "#ffa442"
+  ember:
+    name: "Ember"
+    color:
+      tab: "#ffd152"
+  spark:
+    name: "Spark"
+    color:
+      tab: "#fff652"
+  vanguard:
+    name: "Vanguard"
+  pioneer:
+    name: "Pioneer"
+  camper:
+    name: "Camper"
+  default:
+    name: "Scout"
+
+tablist:
+  header: "&r \n&#ff9a52&lF&#ffa151&li&#ffa850&lr&#ffb04f&le&#ffb74e&ls&#ffbe4d&lt&#ffc54c&la&#ffcc4b&lr&#ffd349&lt&#ffda48&le&#ffe147&lr\n&#e8e5dc[players]\n&r "
+  footer: "&r \n&#e8e5dcfirestartermc.com"

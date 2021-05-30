@@ -1,9 +1,10 @@
-package com.firestartermc.kerosene.util;
+package xyz.nkomarn.tabgroups.util;
 
-import com.firestartermc.kerosene.Kerosene;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
+import xyz.nkomarn.tabgroups.TabGroups;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.concurrent.Callable;
@@ -18,7 +19,6 @@ import java.util.concurrent.CompletionException;
  * for interacting with Minecraft NMS and the Bukkit API.
  *
  * @author Firestarter Minecraft Servers
- * @since 5.0
  */
 @ThreadSafe
 public final class ConcurrentUtils {
@@ -40,7 +40,7 @@ public final class ConcurrentUtils {
      */
     public static void ensureMain(@NotNull Runnable runnable) {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(Kerosene.getKerosene(), runnable);
+            Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(TabGroups.class), runnable);
         } else {
             runnable.run();
         }
